@@ -31,7 +31,21 @@ namespace JoiningRelatedCollectionsLINQ
                 new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
             };
 
-            Console.WriteLine("Hello World!");
+            var millionaireReport =
+                from cust in customers
+                where cust.Balance >= 1000000
+                select cust;
+
+            Console.WriteLine("Rich MoFo List:");
+            foreach (var peep in millionaireReport)
+            {
+                Console.WriteLine($"{peep.Name} at {peep.Bank}");
+
+            }
+
+
+
+
             Console.Read();
         }
     }
