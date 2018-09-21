@@ -31,16 +31,26 @@ namespace JoiningRelatedCollectionsLINQ
                 new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
             };
 
+            //identify & print millionaires in the customers list
             var millionaireReport =
                 from cust in customers
                 where cust.Balance >= 1000000
                 select cust;
 
-            Console.WriteLine("Rich MoFo List:");
+            Console.WriteLine("Rich MoFo List...");
             foreach (var peep in millionaireReport)
             {
                 Console.WriteLine($"{peep.Name} at {peep.Bank}");
+                Console.WriteLine();
 
+            }
+
+            //Sort rich peeps in ascending order by last name. 
+            var sortByLastName = millionaireReport.OrderBy(cust => cust.Name.Split(' ')[1]);
+            Console.WriteLine("...and now sorted in ascending order by last name. Because why not?");
+            foreach (var peep in sortByLastName)
+            {
+                Console.WriteLine($"{peep.Name} at {peep.Bank}");
             }
 
 
