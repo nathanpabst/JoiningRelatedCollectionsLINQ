@@ -38,21 +38,52 @@ namespace JoiningRelatedCollectionsLINQ
                 select cust;
 
             Console.WriteLine("Rich MoFo List...");
-            foreach (var peep in millionaireReport)
-            {
-                Console.WriteLine($"{peep.Name} at {peep.Bank}");
-                Console.WriteLine();
+            //foreach (var peep in millionaireReport)
+            //{
+            //    Console.WriteLine($"{peep.Name} at {peep.Bank}");
+            //    Console.WriteLine();
 
-            }
+            //}
 
             //Sort rich peeps in ascending order by last name. 
             var sortByLastName = millionaireReport.OrderBy(cust => cust.Name.Split(' ')[1]);
-            Console.WriteLine("...and now sorted in ascending order by last name. Because why not?");
-            foreach (var peep in sortByLastName)
-            {
-                Console.WriteLine($"{peep.Name} at {peep.Bank}");
-            }
+            //Console.WriteLine("...and now sorted in ascending order by last name. Because why not?");
+            //foreach (var peep in sortByLastName)
+            //{
+            //    Console.WriteLine($"{peep.Name} at {peep.Bank}");
+            //}
+            //Join the Customer and Bank lists and reprint rich peeps with bank name
+            //var millionaireReportII =
+            //    from cust in customers
+            //    where cust.Balance >= 1000000
+            //    join bank in banks on cust.Bank equals bank.Symbol into cb
+            //    select new { Name = cust.Name, Bank = cb.First().Name };
 
+            //Console.WriteLine();
+            //foreach (var customer in millionaireReportII)
+            //{
+            //    Console.WriteLine($"{customer.Name} at {customer.Bank}");
+            //}
+
+
+            //simple key join
+            var query =
+                from cust in sortByLastName
+                where cust.Balance >= 1000000
+                join bank in banks
+                on cust.Bank equals bank.Symbol
+                select new
+                {
+                    CustomerName = cust.Name,
+                    BankName = bank.Name
+                };
+
+            Console.WriteLine();
+            //Console.WriteLine("acroynms, yuck...here are the bank names");
+            foreach (var custAndBank in query)
+            {
+                Console.WriteLine($"{custAndBank.CustomerName} at {custAndBank.BankName}");
+            }
 
 
 
@@ -71,4 +102,6 @@ namespace JoiningRelatedCollectionsLINQ
         public double Balance { get; set; }
         public string Bank { get; set; }
     }
+
+    
 }
